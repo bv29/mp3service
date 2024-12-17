@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn src/server.ts",
     "start": "node dist/server.js",
-    "watch-ts": "tsc -w"
+    "watch-ts": "tsc -w",
+    "build": "npm install && tsc"
   },
 
   "devDependencies": {
