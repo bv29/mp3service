@@ -7,13 +7,12 @@ import AppRes from './types/AppRes';
 // Create Express server
 const app = express();
 
-
 // Set PORT
 app.set('port', config.port);
 
-// parse json request body
+// Parse JSON request body
 app.use(express.json());
-// parse urlencoded request body
+// Parse URL-encoded request body
 app.use(express.urlencoded({ extended: true }));
 
 // Logger
@@ -23,11 +22,11 @@ app.use(morgan('dev'));
 app.use(cors(config.corsOptions));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.send('Welcome to the Poll Socket Service!');
 });
 
 // 404 Handler
-app.use(function (_, res, next) {
+app.use((_, res, next) => {
   const status = 404;
   const message = 'Resource not found';
   const errorResponse: AppRes = {
@@ -39,7 +38,6 @@ app.use(function (_, res, next) {
 });
 
 // Server Error 500 Handler
-// Calling next(error) in any of the routes will call this function
 app.use(
   (
     error: Error,
@@ -47,7 +45,6 @@ app.use(
     res: express.Response,
     next: express.NextFunction
   ) => {
-    // Incase of 500 Server Error
     console.error(error);
     const status = 500;
     const message = error ? JSON.stringify(error) : 'API Server Error';
